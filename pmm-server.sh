@@ -26,6 +26,15 @@ Options understood:
                     Allowed values: ALL | RELEASE | REPO | REPOSITORY
                     Default: RELEASE
                 Case-insensitive.
+
+INSTALL installs PMM Server, UNINSTALL removes it.
+But default they install/remove everything, but you can specify WHAT to
+only install/remove the repository or the release.
+
+REINSTALL by default reinstalls the release only.
+Specify REPO to remove the repository or ALL to remove both.
+
+SHOW shows information about PMM if installed.
 "
     exit 0
 fi
