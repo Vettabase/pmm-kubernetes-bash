@@ -20,7 +20,7 @@ Options understood:
                 Case-insensitive.
                 Default: SHOW.
     WHAT        With ACTION = SHOW:
-                    Allowed values: ALL | SERVICES | VOLUMES | EVENTS
+                    Allowed values: ALL | SYSTEM | SERVICES | VOLUMES | EVENTS
                     Default: ALL
                 With ACTION = INSTALL | UNINSTALL | REINSTALL:
                     Allowed values: ALL | RELEASE | REPO | REPOSITORY
@@ -126,7 +126,7 @@ fi
 
 if [ $ACTION == 'SHOW' ];
 then
-    if [ $WHAT != 'ALL' ] && [ $WHAT != 'SERVICES' ] && [ $WHAT != 'VOLUMES' ] && [ $WHAT != 'EVENTS' ];
+    if [ $WHAT != 'ALL' ] && [ $WHAT != 'SYSTEM' ] && [ $WHAT != 'SERVICES' ] && [ $WHAT != 'VOLUMES' ] && [ $WHAT != 'EVENTS' ];
     then
         abort '2' "Invalid object: $WHAT"
     fi
@@ -176,6 +176,19 @@ then
     # show info and exit
 
     echo
+
+    if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'SYSTEM'* ]];
+    then
+        echo 'SYSTEM'
+        echo '======'
+        echo
+        echo 'kubectl versions:'
+        kubectl version
+        echo
+        echo 'Helm version:'
+        helm version
+        echo
+    fi
 
     if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'SERVICES'* ]];
     then
