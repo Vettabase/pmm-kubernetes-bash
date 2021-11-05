@@ -1,0 +1,6 @@
+# Global configuration.
+# Use conf.sh.default as a template.
+conf.sh
+# Host-level configuration
+hosts/*
+!hosts/.KEEP
