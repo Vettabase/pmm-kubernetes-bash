@@ -35,6 +35,8 @@ REINSTALL by default reinstalls the release only.
 Specify REPO to remove the repository or ALL to remove both.
 
 SHOW shows information about PMM if installed.
+One can specify multiple comma-separated flags, for example:
+ACTION=SHOW WHAT=SYSTEM,SERVICES ./pmm-server.sh
 "
     exit 0
 fi
