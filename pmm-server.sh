@@ -99,37 +99,35 @@ else
     fi
 fi
 
-if [ $ACTION == 'SHOW' ];
+if [ ! -z "$WHAT" ];
 then
-    if [ -z "$WHAT" ];
-    then
-        WHAT='ALL'
-    else
-        WHAT=${WHAT^^}
-        if [ $WHAT != 'ALL' ] && [ $WHAT != 'SERVICES' ] && [ $WHAT != 'VOLUMES' ] && [ $WHAT != 'EVENTS' ];
-        then
-            abort '2' "Invalid object: $WHAT"
-        fi
-    fi
-fi
-
-if [ $ACTION == 'INSTALL' ] || [ $ACTION == 'UNINSTALL' ] || [ $ACTION == 'REINSTALL' ];
-then
-    if [ -z "$WHAT" ];
+    WHAT=${WHAT^^}
+else
+    if [ $ACTION == 'REINSTALL' ];
     then
         WHAT='RELEASE'
     else
-        WHAT=${WHAT^^}
-        if [ $WHAT != 'ALL' ] && [ $WHAT != 'RELEASE' ] && [ $WHAT != 'REPO' ] && [ $WHAT != 'REPOSITORY' ];
-        then
-            abort '2' "Invalid object: $WHAT"
-        fi
+        WHAT='ALL'
     fi
 fi
 
 
 #  Validation
 #  ==========
+
+if [ $ACTION == 'SHOW' ];
+then
+    if [ $WHAT != 'ALL' ] && [ $WHAT != 'SERVICES' ] && [ $WHAT != 'VOLUMES' ] && [ $WHAT != 'EVENTS' ];
+    then
+        abort '2' "Invalid object: $WHAT"
+    fi
+elif [ $ACTION == 'INSTALL' ] || [ $ACTION == 'UNINSTALL' ] || [ $ACTION == 'REINSTALL' ];
+then
+    if [ $WHAT != 'ALL' ] && [ $WHAT != 'RELEASE' ] && [ $WHAT != 'REPO' ] && [ $WHAT != 'REPOSITORY' ];
+    then
+        abort '2' "Invalid object: $WHAT"
+    fi
+fi
 
 if [ -z "$PMM_SERVER_NAMESPACE" ];
 then
