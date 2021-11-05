@@ -124,13 +124,7 @@ fi
 #  Validation
 #  ==========
 
-if [ $ACTION == 'SHOW' ];
-then
-    if [ $WHAT != 'ALL' ] && [ $WHAT != 'SYSTEM' ] && [ $WHAT != 'SERVICES' ] && [ $WHAT != 'VOLUMES' ] && [ $WHAT != 'EVENTS' ];
-    then
-        abort '2' "Invalid object: $WHAT"
-    fi
-elif [ $ACTION == 'INSTALL' ] || [ $ACTION == 'UNINSTALL' ] || [ $ACTION == 'REINSTALL' ];
+if [ $ACTION == 'INSTALL' ] || [ $ACTION == 'UNINSTALL' ] || [ $ACTION == 'REINSTALL' ];
 then
     if [ $WHAT != 'ALL' ] && [ $WHAT != 'RELEASE' ] && [ $WHAT != 'REPO' ] && [ $WHAT != 'REPOSITORY' ];
     then
@@ -176,6 +170,7 @@ then
     # show info and exit
 
     echo
+    showed=0
 
     if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'SYSTEM'* ]];
     then
@@ -188,6 +183,7 @@ then
         echo 'Helm version:'
         helm version
         echo
+        showed=1
     fi
 
     if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'SERVICES'* ]];
@@ -197,6 +193,7 @@ then
         echo
         kubectl get services monitoring-service
         echo
+        showed=1
     fi
 
     if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'VOLUMES'* ]];
@@ -206,6 +203,7 @@ then
         echo
         kubectl get pv | grep --color=never -E '^NAME|monitoring|pmm'
         echo
+        showed=1
     fi
 
     if [ -z "$WHAT" ] || [[ "$WHAT" == 'ALL' ]] || [[ "$WHAT" == *'EVENTS'* ]];
@@ -215,6 +213,12 @@ then
         echo
         kubectl get events | grep --color=never -E '^LAST SEEN|service/monitoring-service'
         echo
+        showed=1
+    fi
+
+    if [ $showed == 0 ];
+    then
+        abort '2' "Invalid object: $WHAT"
     fi
 
     exit 0
