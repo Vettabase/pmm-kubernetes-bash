@@ -275,7 +275,7 @@ helm get values monitoring >> $LOG
 PMM_SERVER_HOST=$( kubectl get services monitoring-service | tail -1 | tr -s ' ' | cut -d' ' -f4 )
 if [ -z "$PMM_SERVER_HOST" ];
 then
-    abort 'ERROR: Apparently no PMM Server pod was created'
+    abort '2' 'Apparently no PMM Server pod was created'
 else
     echo 'SUCCESS'
 fi
