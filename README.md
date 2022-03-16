@@ -29,6 +29,15 @@ HELP=1 ./pmm-server.sh
 HELP=1 ./pmm-client.sh
 ```
 
+`ACTION=INSTALL pmm-server.sh`  outputs, amongst other things, the IP of PMM Server.
+But you may need this information at any later time. To obtain it, run:
+
+```
+./get-ip.sh
+```
+
+It only outputs the IP, so it can be piped to another script.
+
 
 ## Copyright and License
 
