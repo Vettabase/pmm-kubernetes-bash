@@ -6,6 +6,19 @@ This project is meant for cases where frameworks like Ansible or Puppet
 are not desirable for some reason, or not necessary.
 
 
+## Configuration
+
+Copy the configuration template:
+
+```
+cp conf.sh.default.sh conf.sh
+```
+
+`conf.sh` contains all the configuration. Each option is documented in the file itself.
+
+The file is ignored by git.
+
+
 ## Usage
 
 Currently scripts usage is documented in the scripts themselves.
