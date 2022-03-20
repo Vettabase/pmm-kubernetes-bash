@@ -155,7 +155,7 @@ then
     else
         echo 'PMM2 Client is not installed'
     fi
-    exit 1
+    success ''
 fi
 
 # on UNINSTALL, uninstall pmm2-client if it's installed and exit
