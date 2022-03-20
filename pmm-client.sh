@@ -218,8 +218,6 @@ fi
 
 success 'SUCCESS'
 
-exit 0
-
 
 # TODO:
 #   - Allow to install a specific version of pmm2-client
