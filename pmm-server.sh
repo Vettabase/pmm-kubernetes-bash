@@ -68,6 +68,12 @@ abort () {
     exit $exit_code
 }
 
+success () {
+    message=$1
+    echo $message
+    exit 0
+}
+
 run () {
     command=$1
     echo "Running command: $command" >> $LOG
@@ -223,7 +229,7 @@ then
         abort '2' "Invalid object: $WHAT"
     fi
 
-    exit 0
+    success ''
 elif [ $ACTION == 'UNINSTALL' ];
 then
     # uninstall and exit
@@ -235,7 +241,7 @@ then
     then
         run 'helm repo remove percona'
     fi
-    exit 0
+    success 'Success'
 elif [ $ACTION == 'REINSTALL' ];
 then
     # uninstall and then continue
@@ -283,7 +289,7 @@ echo $PMM_SERVER_HOST > info/pmm-server-host
 log "PMM Server host: $PMM_SERVER_HOST"
 echo "PMM Server host: $PMM_SERVER_HOST"
 
-exit 0
+success 'Success'
 
 
 # TODO:
