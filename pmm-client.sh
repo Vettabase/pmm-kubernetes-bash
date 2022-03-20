@@ -64,7 +64,7 @@ abort () {
 success () {
     message=$1
     echo $message
-    exit 1
+    exit 0
 }
 
 run () {
