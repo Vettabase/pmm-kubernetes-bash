@@ -97,7 +97,7 @@ run () {
 
     if [ "$ignore_errors" != '1' ] && [ "$r" != '0' ];
     then
-        abort "$r" "Last command failed with exit code: $r"
+        abort $r "Last command failed with exit code: $r"
     fi
 }
 
@@ -112,7 +112,7 @@ else
     ACTION=${ACTION^^}
     if [ $ACTION != 'SHOW' ] && [ $ACTION != 'INSTALL' ] && [ $ACTION != 'UNINSTALL' ] && [ $ACTION != 'REINSTALL' ];
     then
-        abort '2' "Invalid action: $ACTION"
+        abort 2 "Invalid action: $ACTION"
     fi
 fi
 
@@ -134,7 +134,7 @@ if [[ $(id -u) -gt 0 ]];
 then
     if [ "$FORCE_SUDO" == '0' ];
     then
-        abort '2' "$this needs to run as root, with sudo, or with FORCE_SUDO=1"
+        abort 2 "$this needs to run as root, with sudo, or with FORCE_SUDO=1"
     fi
 fi
 
