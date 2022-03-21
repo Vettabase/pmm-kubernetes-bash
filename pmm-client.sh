@@ -193,6 +193,15 @@ fi
 #   - REINSTALL: The uninstall part is done, continue to install again
 #   - INSTALL: Continue to install
 
+if [ -z "$SKIP_CREATE_USER" ];
+then
+    account="'$PMM_CLIENT_MARIADB_USER'@'$PMM_CLIENT_MARIADB_HOST'"
+    sql="mysql -e \"CREATE USER $account IDENTIFIED BY PASSWORD 'PMM_CLIENT_MARIADB_PASSWORD' WITH MAX_USER_CONNECTIONS 10;\""
+    run "$sql"
+    sql="GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO $account;"
+    run "$sql"
+fi
+
 # if Percona repositories are already installed,
 # we need to disable and re-enable them as documented by Percona
 percona_release=$( which percona-release 2> /dev/null )
