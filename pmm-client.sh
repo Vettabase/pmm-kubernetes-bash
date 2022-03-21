@@ -19,6 +19,11 @@ Options understood:
     ACTION        Allowed values: SHOW | INSTALL | REINSTALL | UNINSTALL
                   Case-insensitive.
                   Default: SHOW
+
+Action modifiers:
+    SKIP_ADD_USER      On INSTALL, don't run CREATE USER.
+    FORCE_CREATE_USER  On INSTALL, DROP and reCREATE user if it exists.
+    SKIP_DROP_USER     On UNINSTALL and REINSTALL, don't run DROP USER.
 "
     exit 0
 fi
