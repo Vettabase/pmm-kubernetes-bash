@@ -21,9 +21,9 @@ Options understood:
                   Default: SHOW
 
 Action modifiers:
-    SKIP_ADD_USER      On INSTALL, don't run CREATE USER.
-    FORCE_CREATE_USER  On INSTALL, DROP and reCREATE user if it exists.
-    SKIP_DROP_USER     On UNINSTALL and REINSTALL, don't run DROP USER.
+    SKIP_ADD_USER=1      On INSTALL, don't run CREATE USER.
+    FORCE_CREATE_USER=1  On INSTALL, DROP and reCREATE user if it exists.
+    SKIP_DROP_USER=1     On UNINSTALL and REINSTALL, don't run DROP USER.
 "
     exit 0
 fi
