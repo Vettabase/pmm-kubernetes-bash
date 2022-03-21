@@ -126,6 +126,9 @@ then
     PMM_SERVER_HOST=$( cat info/pmm-server-host )
 fi
 
+# User to DROP / CREATE PMM Client user in MariaDB
+account="'$PMM_CLIENT_MARIADB_USER'@'$PMM_CLIENT_MARIADB_HOST'"
+
 
 #  Validation
 #  ==========
@@ -161,6 +164,12 @@ fi
 # on UNINSTALL, uninstall pmm2-client if it's installed and exit
 if [ $ACTION == 'UNINSTALL' ];
 then
+    if [ -z "$SKIP_DROP_USER" ];
+    then
+        sql="mysql -e \"DROP USER $account\""
+        run "$sql"
+    fi
+
     if [ ! -z "$pmm_admin" ];
     then
         log "pmm-admin found: $pmm_admin"
@@ -175,6 +184,12 @@ fi
 # on REINSTALL, uninstall pmm2-client if it's installed and continue
 if [ $ACTION == 'REINSTALL' ];
 then
+    if [ -z "$SKIP_DROP_USER" ];
+    then
+        sql="mysql -e \"DROP USER $account\""
+        run "$sql"
+    fi
+
     if [ ! -z "$pmm_admin" ];
     then
         log "pmm-admin found: $pmm_admin"
@@ -195,7 +210,6 @@ fi
 
 if [ -z "$SKIP_CREATE_USER" ];
 then
-    account="'$PMM_CLIENT_MARIADB_USER'@'$PMM_CLIENT_MARIADB_HOST'"
     sql="mysql -e \"CREATE USER $account IDENTIFIED BY PASSWORD 'PMM_CLIENT_MARIADB_PASSWORD' WITH MAX_USER_CONNECTIONS 10;\""
     run "$sql"
     sql="GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO $account;"
