@@ -128,6 +128,7 @@ fi
 
 # User to DROP / CREATE PMM Client user in MariaDB
 account="'$PMM_CLIENT_MARIADB_USER'@'$PMM_CLIENT_MARIADB_HOST'"
+account_was_dropped=0
 
 
 #  Validation
@@ -166,8 +167,9 @@ if [ $ACTION == 'UNINSTALL' ];
 then
     if [ -z "$SKIP_DROP_USER" ];
     then
-        sql="mysql -e \"DROP USER $account\""
+        sql="mysql -e \"DROP USER IF EXISTS $account\""
         run "$sql"
+        account_was_dropped=1
     fi
 
     if [ ! -z "$pmm_admin" ];
@@ -186,8 +188,9 @@ if [ $ACTION == 'REINSTALL' ];
 then
     if [ -z "$SKIP_DROP_USER" ];
     then
-        sql="mysql -e \"DROP USER $account\""
+        sql="mysql -e \"DROP USER IF EXISTS $account\""
         run "$sql"
+        account_was_dropped=1
     fi
 
     if [ ! -z "$pmm_admin" ];
@@ -210,6 +213,11 @@ fi
 
 if [ -z "$SKIP_CREATE_USER" ];
 then
+    if [ -z "$FORCE_CREATE_USER" ];
+    then
+        sql="mysql -e \"DROP USER IF EXISTS $account\""
+        run "$sql"
+    fi
     sql="mysql -e \"CREATE USER $account IDENTIFIED BY PASSWORD 'PMM_CLIENT_MARIADB_PASSWORD' WITH MAX_USER_CONNECTIONS 10;\""
     run "$sql"
     sql="GRANT SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ON *.* TO $account;"
