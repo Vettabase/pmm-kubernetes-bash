@@ -260,12 +260,12 @@ fi
 
 if [ $WHAT == 'ALL' ] || [ $WHAT == 'REPO' ] || [ $WHAT == 'REPOSITORY' ];
 then
-    run 'helm repo add percona https://percona-charts.storage.googleapis.com'
+    run 'helm repo add percona https://percona.github.io/percona-helm-charts/'
     run 'helm repo update'
 fi
 if [ $WHAT == 'ALL' ] || [ $WHAT == 'RELEASE' ];
 then
-    run "helm install monitoring percona/pmm-server --set platform=$PMM_SERVER_PLATFORM --set credentials.username=$PMM_SERVER_USER --set credentials.password=$PMM_SERVER_PASSWORD"
+    run "helm install monitoring percona/pmm --set secret.pmm_password=$PMM_SERVER_PASSWORD --set serviceAccount.create=false --set serviceAccount.name=default"
 fi
 
 helm get values monitoring
