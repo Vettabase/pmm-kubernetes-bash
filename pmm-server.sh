@@ -39,9 +39,6 @@ Specify REPO to remove the repository or ALL to remove both.
 SHOW shows information about PMM if installed.
 One can specify multiple comma-separated flags, for example:
 ACTION=SHOW WHAT=SYSTEM,SERVICES ./pmm-server.sh
-
-A 'values.yaml' file containing chart configuration values are used if it exists
-in the current directory.
 "
     exit 0
 fi
@@ -270,12 +267,12 @@ then
 fi
 if [ $WHAT == 'ALL' ] || [ $WHAT == 'RELEASE' ];
 then
-    if [ -r values.yaml ] && [ ! -z $VERSION ];
+    if [ -r $PMM_SERVER_VALUES ] && [ ! -z $VERSION ];
     then
-        run "helm install -f example-values.yaml --version=$VERSION monitoring percona/pmm"
-    elif [ -r values.yaml ];
+        run "helm install -f $PMM_SERVER_VALUES --version=$VERSION monitoring percona/pmm"
+    elif [ -r $PMM_SERVER_VALUES ];
     then
-        run "helm install -f example-values.yaml monitoring percona/pmm"
+        run "helm install -f $PMM_SERVER_VALUES monitoring percona/pmm"
     elif [ ! -z $VERSION ];
     then
         run "helm install --version=$VERSION monitoring percona/pmm"

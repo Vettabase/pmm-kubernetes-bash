@@ -1,6 +1,8 @@
 # Global configuration.
 # Use conf.sh.default as a template.
 conf.sh
+# Use example-values.yaml as a template.
+values.yaml
 # Host-level configuration
 hosts/*
 !hosts/.KEEP
