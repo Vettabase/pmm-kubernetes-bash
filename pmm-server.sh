@@ -19,6 +19,8 @@ Options understood:
     ACTION      Allowed values: SHOW | INSTALL | UNINSTALL | REINSTALL.
                 Case-insensitive.
                 Default: SHOW.
+    VERSION     The chart version to use.
+                Default: latest
     WHAT        With ACTION = SHOW:
                     Allowed values: ALL | SYSTEM | SERVICES | VOLUMES | EVENTS
                     Default: ALL
@@ -265,7 +267,18 @@ then
 fi
 if [ $WHAT == 'ALL' ] || [ $WHAT == 'RELEASE' ];
 then
-    run "helm install monitoring percona/pmm --set secret.pmm_password=$PMM_SERVER_PASSWORD --set serviceAccount.create=false --set serviceAccount.name=default"
+    if [ -r $PMM_SERVER_VALUES ] && [ ! -z $VERSION ];
+    then
+        run "helm install -f $PMM_SERVER_VALUES --version=$VERSION monitoring percona/pmm"
+    elif [ -r $PMM_SERVER_VALUES ];
+    then
+        run "helm install -f $PMM_SERVER_VALUES monitoring percona/pmm"
+    elif [ ! -z $VERSION ];
+    then
+        run "helm install --version=$VERSION monitoring percona/pmm"
+    else
+        run "helm install monitoring percona/pmm"
+    fi
 fi
 
 helm get values monitoring
@@ -293,6 +306,5 @@ success 'Success'
 
 
 # TODO:
-#   - Allow to install a specific version
 #   - Allow to use a non-standard server port
 

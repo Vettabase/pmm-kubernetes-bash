@@ -20,6 +20,8 @@ PMM_SERVER_HOST=
 PMM_SERVER_USER='admin'
 # Password for PMM Server user
 PMM_SERVER_PASSWORD='...'
+# File containing chart configuration values for PMM Server 
+PMM_SERVER_VALUES='values.yaml'
 
 # Set exactly to 1 to enable "mysql" service in PMM Client
 PMM_SERVICE_MYSQL=1
