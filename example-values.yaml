@@ -34,14 +34,14 @@ pmmEnv:
 #  GF_AUTH_GENERIC_OAUTH_ALLOWED_DOMAINS: ''
 
 ## @param pmmResources optional [Resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) requested for [PMM container](https://docs.percona.com/percona-monitoring-and-management/setting-up/server/index.html#set-up-pmm-server)
-    ##  pmmResources:
-    ##    requests:
-    ##      memory: "32Gi"
-    ##      cpu: "8"
-    ##    limits:
-    ##      memory: "64Gi"
-    ##      cpu: "32"
-pmmResources: {}
+pmmResources:
+  requests:
+    memory: "32Gi"
+    cpu: "8"
+  limits:
+    memory: "64Gi"
+    cpu: "24"
+## pmmResources: {}
 
 ## @section PMM secrets
 ##
@@ -74,7 +74,7 @@ service:
   name: monitoring-service
   ## @param service.type Kubernetes Service type
   ##
-  type: LoadBalancer
+  type: ClusterIP
 
   ## Ports 443 and/or 80
   ##
@@ -110,7 +110,7 @@ storage:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  # storageClassName: "my-storage-class-name"
+  storageClassName: "db-nvme-storage"
   ##
   ## @param storage.size size of storage [depends](https://docs.percona.com/percona-monitoring-and-management/setting-up/server/index.html#set-up-pmm-server) on number of monitored services and data retention
   ##
