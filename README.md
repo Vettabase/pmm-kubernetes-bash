@@ -28,6 +28,13 @@ NB! Make sure the values are the same for `PMM_SERVER_PASSWORD` in `conf.sh` and
 
 These file are ignored by git.
 
+### Notes about the values.yaml file
+
+The `example-values.yaml` file has the `service` `type` as `ClusterIP`, so it
+can use the separate `LoadBalancer` (see below).
+
+Note also that the `storageClassName` used is a magical one which in the
+Diamond Kubernetes cluster will give us node-local storage.
 
 ## Usage
 
