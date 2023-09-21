@@ -10,13 +10,23 @@ are not desirable for some reason, or not necessary.
 
 Copy the configuration template:
 
-```
+```bash
 cp conf.sh.default.sh conf.sh
 ```
 
-`conf.sh` contains all the configuration. Each option is documented in the file itself.
+Also copy the example 'values' file:
 
-The file is ignored by git.
+```bash
+cp example-values.yaml values.yaml
+```
+
+`conf.sh` and `values.yaml` contain all the configuration. Each option is
+documented in the files themselves.
+
+NB! Make sure the values are the same for `PMM_SERVER_PASSWORD` in `conf.sh` and
+`pmm_password` in `values.yaml`.
+
+These file are ignored by git.
 
 
 ## Usage
@@ -24,7 +34,7 @@ The file is ignored by git.
 Currently scripts usage is documented in the scripts themselves.
 To see their built-in help:
 
-```
+```bash
 HELP=1 ./pmm-server.sh
 HELP=1 ./pmm-client.sh
 ```
@@ -32,12 +42,22 @@ HELP=1 ./pmm-client.sh
 `ACTION=INSTALL pmm-server.sh`  outputs, amongst other things, the IP of PMM Server.
 But you may need this information at any later time. To obtain it, run:
 
-```
+```bash
 ./get-ip.sh
 ```
 
 It only outputs the IP, so it can be piped to another script.
 
+## Load balancer
+
+Currently, the project needs a separate LoadBalancer to work. This has a fixed
+IP address which was assigned especially for PMM.
+
+Install this with:
+
+```bash
+kubectl apply -f ./pmm-loadbalancer.yaml
+```
 
 ## Copyright and License
 

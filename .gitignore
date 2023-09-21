@@ -6,3 +6,7 @@ values.yaml
 # Host-level configuration
 hosts/*
 !hosts/.KEEP
+# Info sharing between pmm-server and pmm-client?
+info/*
+# Logs
+log
